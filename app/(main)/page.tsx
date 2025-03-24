@@ -13,7 +13,7 @@ type Post = {
 
 export default function Home() {
   const router = useRouter();
-  const [data, setData] = useState<Post[]>([]); // Type enforced as Post[]
+  const [data, setData] = useState<Post[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchField, setSearchField] = useState<"title" | "id">("title");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -44,14 +44,12 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // Filter Data based on Search Query & Selected Field
   const filteredData = data.filter((post: Post) =>
     searchField === "title"
       ? post.title.toLowerCase().includes(searchQuery.toLowerCase())
       : post.id.toString().includes(searchQuery)
   );
 
-  // Paginate Filtered Data
   const paginatedData = filteredData.slice(currentPage * postsPerPage, (currentPage + 1) * postsPerPage);
 
   const nextPage = () => {
