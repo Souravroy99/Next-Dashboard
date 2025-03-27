@@ -56,7 +56,7 @@ const LoginForm = () => {
       alert('No user found. Please sign up first.');
       return;
     }
-
+  
     if (data.email === storedEmail && data.password === storedPassword) {
       try {
         const response = await fetch("/api/register", {

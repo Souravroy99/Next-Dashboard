@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import home from "../img/home.png";
 import { useRouter } from "next/navigation";
-import { LogOut } from "lucide-react"; // Import logout icon
+import { LogOut, Trash2, User } from "lucide-react"; // Icons
+import { useEffect, useState } from "react";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -19,8 +20,26 @@ import ThemeToggler from "@/components/ThemeToggler";
 
 const Navbar = () => {
   const router = useRouter();
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+
+  useEffect(() => {
+    const name = localStorage.getItem("name");
+    const email = localStorage.getItem("email");
+
+    setName(name);
+    setEmail(email);
+  }, []);
+  
 
   const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    router.push("/auth");
+  };
+
+  const handleDeleteAccount = () => {
+    localStorage.removeItem("name"); 
+    localStorage.removeItem("email"); 
     localStorage.removeItem("authToken");
     router.push("/auth");
   };
@@ -34,13 +53,30 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         <ThemeToggler />
 
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-500 text-white font-semibold px-2 py-2 rounded-lg shadow-md flex items-center gap-2 transition-all duration-200"
-        >
-          <LogOut className="w-5 h-5" />
-          Logout
-        </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="focus:outline-none">
+            <Avatar>
+
+                <AvatarFallback className="bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300">
+                  <User className="w-5 h-5" />
+                </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end" className="w-56 bg-white dark:bg-gray-800">
+            <DropdownMenuLabel className="text-lg font-semibold">{name || "Guest"}</DropdownMenuLabel>
+            <p className="px-3 text-sm text-gray-500">{email || "No email"}</p>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer flex items-center gap-2 text-red-600">
+              <LogOut className="w-5 h-5" /> Logout
+            </DropdownMenuItem>
+
+            <DropdownMenuItem onClick={handleDeleteAccount} className="cursor-pointer flex items-center gap-2 text-red-700">
+              <Trash2 className="w-5 h-5" /> Delete Account
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const { email, password } = await req.json();
     
     const SECRET_KEY = process.env.JWT_SECRET_KEY || "default_secret";
-    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "5s" });
 
     return NextResponse.json({ token }, { status: 200 });
   } 
