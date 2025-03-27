@@ -20,15 +20,15 @@ import ThemeToggler from "@/components/ThemeToggler";
 
 const Navbar = () => {
   const router = useRouter();
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
 
-    setName(name);
-    setEmail(email);
+    setName(name ?? "Guest"); 
+    setEmail(email ?? "guest@example.com"); 
   }, []);
   
 
