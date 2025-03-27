@@ -1,4 +1,4 @@
-Live Link:  https://next-dashboard-ts2.vercel.app/
+Live Link:  [https://next-dashboard-c5xj.vercel.app/](https://next-dashboard-c5xj.vercel.app/auth)
 
 This is a admin dashboard UI built with Next.js. It is only the front-end interface so we are just using files for the data.
 
